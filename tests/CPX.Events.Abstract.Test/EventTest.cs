@@ -8,7 +8,7 @@ public class EventTest
         // Arrange
         var id = "id";
         var version = 1;
-        var createdAt = DateTime.Now;
+        var createdAt = DateTimeOffset.Now;
         // Act
         var mockEvent = new Mock<Event>(id, version, createdAt);
         var @event = mockEvent.Object;
