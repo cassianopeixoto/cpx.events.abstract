@@ -2,7 +2,7 @@
 
 public abstract class Event
 {
-    protected Event(string id, int version, DateTime createdAt)
+    protected Event(string id, int version, DateTimeOffset createdAt)
     {
         Id = id;
         Version = version;
@@ -11,5 +11,5 @@ public abstract class Event
 
     public string Id { get; }
     public int Version { get; }
-    public DateTime CreatedAt { get; }
+    public DateTimeOffset CreatedAt { get; }
 }
