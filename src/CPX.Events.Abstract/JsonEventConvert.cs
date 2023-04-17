@@ -19,7 +19,18 @@ public static class JsonEventConvert
 
     public static TEvent? Deserialize<TEvent>(string value) where TEvent : Event
     {
-        var @event = JsonConvert.DeserializeObject<TEvent>(value);
+        var @object = Deserialize(value, typeof(TEvent));
+        return @object as TEvent;
+    }
+
+    public static object? Deserialize(string value, Type type)
+    {
+        var eventType = typeof(Event);
+
+        if (eventType.IsAssignableFrom(type).Equals(false))
+            throw new ArgumentException("The provided type does not extend the Event class.");
+
+        var @event = JsonConvert.DeserializeObject(value, type);
 
         if (@event is null)
             return null;

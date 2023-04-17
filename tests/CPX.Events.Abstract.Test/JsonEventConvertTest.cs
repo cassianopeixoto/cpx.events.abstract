@@ -23,11 +23,29 @@ public sealed class JsonEventConvertTest
         var createdAt = new DateTimeOffset(new DateTime(2023, 4, 17));
         var @event = new FooEvent(createdAt);
         var serializedEvent = JsonEventConvert.Serialize(@event);
+        var type = @event.GetType();
         // Act
-        @event = JsonEventConvert.Deserialize<FooEvent>(serializedEvent);
+        var @object = JsonEventConvert.Deserialize(serializedEvent, type);
+        @event = @object as FooEvent;
         // Assert
         Assert.NotNull(@event);
         if (@event is not null)
             Assert.Equal(createdAt, @event.CreatedAt);
+    }
+
+    [Fact]
+    public void Should_not_be_able_to_deserialize_when_the_object_is_not_an_event()
+    {
+        // Arrange
+        var name = "foo";
+        var foo = new Foo(name);
+        var type = foo.GetType();
+        var serialized = $"{{\"name\":\"{name}\"}}";
+        // Act
+        // Assert
+        Assert.Throws<ArgumentException>(() =>
+        {
+            JsonEventConvert.Deserialize(serialized, type);
+        });
     }
 }
