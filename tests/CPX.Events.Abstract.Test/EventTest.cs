@@ -1,6 +1,8 @@
+using CPX.Events.Abstract.Test.Mocks;
+
 namespace CPX.Events.Abstract.Test;
 
-public class EventTest
+public sealed class EventTest
 {
     [Fact]
     public void Should_be_able_to_create()
@@ -8,8 +10,7 @@ public class EventTest
         // Arrange
         var createdAt = DateTimeOffset.Now;
         // Act
-        var mockEvent = new Mock<Event>(createdAt);
-        var @event = mockEvent.Object;
+        var @event = new FooEvent(createdAt);
         // Assert
         Assert.Equal(createdAt, @event.CreatedAt);
     }
